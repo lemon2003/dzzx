@@ -1,255 +1,369 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>用户注册登录 - 单招咨询系统</title>
-  <!-- 保留原有bootstrap和supabase依赖 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
-  <!-- 引入公共样式（与index.html保持一致） -->
-  <link rel="stylesheet" type="text/css" href="common.css">
-  <style>
-    /* 原有登录页面样式 */
-    .form-card { max-width: 500px; margin: 50px auto; }
-    .tab-content { padding: 20px 0; }
-    .alert { margin-top: 15px; display: none; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单招咨询系统 - 登录注册</title>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <style>
+        /* 登录注册区域样式 */
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
 
-    /* 从index.html复用的样式 */
-    /* 导航栏样式 */
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
-    }
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
 
-    .logo {
-      font-size: 18px;
-      font-weight: bold;
-      color: #2c5282;
-    }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
 
-    .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
-    }
+        .auth-tab.active {
+            color: #2c5282;
+            border-bottom: 2px solid #2c5282;
+            font-weight: bold;
+        }
 
-    .nav-menu li a {
-      text-decoration: none;
-      color: #333;
-      font-size: 16px;
-    }
+        .auth-form {
+            display: none;
+        }
 
-    .nav-menu li a:hover {
-      color: #2c5282;
-    }
+        .auth-form.active {
+            display: block;
+        }
 
-    /* Banner区域（简化版） */
-    .banner {
-      background-color: #2c5282;
-      color: #fff;
-      padding: 30px 0;
-      text-align: center;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .banner h3 {
-      font-size: 18px;
-      margin: 0;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
 
-    /* 页脚样式 */
-    footer {
-      background-color: #f8f9fa;
-      padding: 20px 0;
-      margin-top: 50px;
-      border-top: 1px solid #eee;
-    }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-    .footer-info {
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-    }
+        .form-group input:focus {
+            outline: none;
+            border-color: #2c5282;
+        }
 
-    /* 响应式适配 */
-    @media (max-width: 768px) {
-      .nav {
-        flex-direction: column;
-        gap: 10px;
-      }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2c5282;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-      .nav-menu {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-  </style>
+        .submit-btn:hover {
+            background-color: #1e3a5f;
+        }
+
+        .error-tip {
+            color: #ff4d4f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* 新增提示框样式（复用index的alert逻辑，不影响原有样式） */
+        .alert {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .auth-container {
+                margin: 30px auto;
+                padding: 20px;
+            }
+        }
+    </style>
+    <!-- 引入Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-  <!-- 复用index.html的导航栏 -->
-  <header>
-    <div class="container nav">
-      <div class="logo">河南书易教育单招咨询</div>
-      <ul class="nav-menu">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="#">书易单招院校大全</a></li>
-        <li><a href="yuanxiao.html">根据专业选院校</a></li>
-        <li><a href="zhuanye.html">根据成绩选院校</a></li>
-        <li><a href="login.html">登录 | 注册</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- 简化版Banner（保持风格统一） -->
-  <section class="banner">
-    <div class="container">
-      <h3>书易VIP专属通道 · 注册登录后可查看更多单招专属服务</h3>
-    </div>
-  </section>
-
-  <!-- 原有登录注册核心内容 -->
-  <div class="container">
-    <div class="card form-card">
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#register">注册</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#login">登录</a></li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <div class="tab-content">
-          <!-- 注册表单 -->
-          <div class="tab-pane fade show active" id="register">
-            <h5 class="card-title text-center mb-4">注册成书易VIP，免费指导单招院校</h5>
-            <form id="registerForm">
-              <div class="mb-3">
-                <label class="form-label">姓名</label>
-                <input type="text" class="form-control" name="name" placeholder="请输入姓名" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">手机号</label>
-                <input type="tel" class="form-control" name="phone" placeholder="请输入11位手机号" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">提交注册</button>
-            </form>
-            <div id="registerAlert" class="alert"></div>
-          </div>
-
-          <!-- 登录表单 -->
-          <div class="tab-pane fade" id="login">
-            <h5 class="card-title text-center mb-4">欢迎您，尊贵的书易VIP</h5>
-            <form id="loginForm">
-              <div class="mb-3">
-                <label class="form-label">姓名</label>
-                <input type="text" class="form-control" name="name" placeholder="请输入注册姓名" required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">手机号</label>
-                <input type="tel" class="form-control" name="phone" placeholder="请输入注册手机号" required>
-              </div>
-              <button type="submit" class="btn btn-success w-100">登录</button>
-            </form>
-            <div id="loginAlert" class="alert"></div>
-          </div>
+    <!-- 导航栏（复用原有样式） -->
+    <header>
+        <div class="container nav">
+            <div class="logo">河南书易教育单招咨询</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#">单招院校大全</a></li>
+                <li><a href="yuanxiao.html">根据专业选院校</a></li>
+                <li><a href="zhuanye.html">根据成绩选院校</a></li>
+                <li><a href="login.html">登录 | 注册</a></li>
+            </ul>
         </div>
-      </div>
-    </div>
-  </div>
+    </header>
 
-  <!-- 复用index.html的页脚 -->
-  <footer>
-    <div class="container footer-info">
-      <p>单招咨询系统 © 2026 版权所有 | 联系电话：400-XXXX-XXXX | 邮箱：contact@dzzx.com</p>
-      <p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
-    </div>
-  </footer>
+    <!-- 登录注册核心区域 -->
+    <section class="container">
+        <div class="auth-container">
+            <!-- 切换标签 -->
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">登录</div>
+                <div class="auth-tab" data-tab="register">注册</div>
+            </div>
 
-  <!-- 原有脚本 -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // 初始化 Supabase
-    const SUPABASE_URL = 'https://lslgursmabhdnpegnetp.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGd1cnNtYWJoZG5wZWduZXRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyNTc2NzAsImV4cCI6MjA4NTgzMzY3MH0.yZZsh87v5-xSzbduy1qJQP1jinfriJ07L5TLhnXh8jc';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      global: { fetch: (url, options = {}) => { options.credentials = 'omit'; return fetch(url, options); } }
-    });
+            <!-- 登录表单 -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginName">姓名</label>
+                    <input type="text" id="loginName" placeholder="请输入您的姓名" required>
+                    <div class="error-tip" id="loginNameError">姓名不能为空</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPhone">手机号码</label>
+                    <input type="tel" id="loginPhone" placeholder="请输入您的手机号码" required>
+                    <div class="error-tip" id="loginPhoneError">请输入正确的手机号码</div>
+                </div>
+                <button type="submit" class="submit-btn">登录</button>
+                <!-- 新增登录提示框 -->
+                <div id="loginAlert" class="alert"></div>
+            </form>
 
-    // 注册逻辑
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.name.value.trim();
-      const phone = form.phone.value.trim();
-      const alertEl = document.getElementById('registerAlert');
+            <!-- 注册表单 -->
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">姓名</label>
+                    <input type="text" id="registerName" placeholder="请输入您的姓名" required>
+                    <div class="error-tip" id="registerNameError">姓名不能为空</div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">手机号码</label>
+                    <input type="tel" id="registerPhone" placeholder="请输入您的手机号码" required>
+                    <div class="error-tip" id="registerPhoneError">请输入正确的手机号码</div>
+                </div>
+                <button type="submit" class="submit-btn">注册</button>
+                <!-- 新增注册提示框 -->
+                <div id="registerAlert" class="alert"></div>
+            </form>
+        </div>
+    </section>
 
-      if (!/^1[3-9]\d{9}$/.test(phone)) {
-        alertEl.className = 'alert alert-danger';
-        alertEl.textContent = '请输入有效的11位手机号';
-        alertEl.style.display = 'block';
-        return;
-      }
+    <!-- 页脚（复用原有样式） -->
+    <footer>
+        <div class="container footer-info">
+            <p>单招咨询系统 © 2026 版权所有 | 联系电话：400-XXXX-XXXX | 邮箱：contact@dzzx.com</p>
+            <p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
+        </div>
+    </footer>
 
-      try {
-        const { data, error } = await supabase.from('user_info').insert([{ name, phone }]).select();
-        if (error) {
-          alertEl.className = 'alert alert-danger';
-          alertEl.textContent = error.message.includes('unique constraint') ? '该手机号已注册' : `注册失败：${error.message}`;
-          alertEl.style.display = 'block';
-          return;
+    <script>
+        // 初始化 Supabase（复用index的配置）
+        const SUPABASE_URL = 'https://lslgursmabhdnpegnetp.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbGd1cnNtYWJoZG5wZWduZXRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyNTc2NzAsImV4cCI6MjA4NTgzMzY3MH0.yZZsh87v5-xSzbduy1qJQP1jinfriJ07L5TLhnXh8jc';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            global: { fetch: (url, options = {}) => { options.credentials = 'omit'; return fetch(url, options); } }
+        });
+
+        // 标签切换逻辑（保留原有）
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有active类
+                authTabs.forEach(t => t.classList.remove('active'));
+                authForms.forEach(f => f.classList.remove('active'));
+
+                // 给当前标签和对应表单添加active类
+                tab.classList.add('active');
+                const targetTab = tab.getAttribute('data-tab');
+                document.querySelector(`#${targetTab}Form`).classList.add('active');
+            });
+        });
+
+        // 手机号码验证规则（保留原有，与index规则一致）
+        function isValidPhone(phone) {
+            const reg = /^1[3-9]\d{9}$/;
+            return reg.test(phone);
         }
 
-        // 注册成功：1. 写入登录状态 2. 跳转
-        localStorage.setItem('userLoginStatus', 'true'); // 写入登录标识
-        localStorage.setItem('userName', name); // 可选：存储用户名
-        alertEl.className = 'alert alert-success';
-        alertEl.textContent = '注册成功！即将跳转到单招咨询页面...';
-        alertEl.style.display = 'block';
-        form.reset();
-        setTimeout(() => { window.location.href = 'shuyi.html'; }, 1500);
-      } catch (err) {
-        alertEl.className = 'alert alert-danger';
-        alertEl.textContent = `网络错误：${err.message}`;
-        alertEl.style.display = 'block';
-      }
-    });
+        // 登录表单提交（重构为index的逻辑，保留原有前端验证）
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('loginName').value.trim();
+            const phone = document.getElementById('loginPhone').value.trim();
+            const loginAlert = document.getElementById('loginAlert');
+            let isValid = true;
 
-    // 登录逻辑
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.name.value.trim();
-      const phone = form.phone.value.trim();
-      const alertEl = document.getElementById('loginAlert');
+            // 原有前端验证逻辑保留
+            if (!name) {
+                document.getElementById('loginNameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('loginNameError').style.display = 'none';
+            }
+            if (!isValidPhone(phone)) {
+                document.getElementById('loginPhoneError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('loginPhoneError').style.display = 'none';
+            }
 
-      try {
-        const { data, error } = await supabase.from('user_info').select('*').eq('phone', phone).eq('name', name).single();
-        if (error) {
-          alertEl.className = 'alert alert-danger';
-          alertEl.textContent = error.code === 'PGRST116' ? '姓名或手机号错误' : `登录失败：${error.message}`;
-          alertEl.style.display = 'block';
-          return;
-        }
+            // 前端验证不通过则终止
+            if (!isValid) return;
 
-        // 登录成功：1. 写入登录状态 2. 跳转
-        localStorage.setItem('userLoginStatus', 'true'); // 核心：登录标识
-        localStorage.setItem('userName', data.name); // 可选：存储用户名
-        alertEl.className = 'alert alert-success';
-        alertEl.textContent = `登录成功！欢迎 ${data.name}，即将跳转到单招咨询页面...`;
-        alertEl.style.display = 'block';
-        form.reset();
-        setTimeout(() => { window.location.href = 'shuyi.html'; }, 1500);
-      } catch (err) {
-        alertEl.className = 'alert alert-danger';
-        alertEl.textContent = `网络错误：${err.message}`;
-        alertEl.style.display = 'block';
-      }
-    });
-  </script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0d390eaa32dc4bf9a297f31d3850d355","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+            try {
+                // 调用Supabase查询用户（复用index逻辑）
+                const { data, error } = await supabase.from('user_info')
+                    .select('*')
+                    .eq('phone', phone)
+                    .eq('name', name)
+                    .single();
+
+                if (error) {
+                    loginAlert.className = 'alert alert-danger';
+                    loginAlert.textContent = error.code === 'PGRST116' ? '姓名或手机号错误' : `登录失败：${error.message}`;
+                    loginAlert.style.display = 'block';
+                    return;
+                }
+
+                // 登录成功（复用index的状态存储和跳转逻辑）
+                localStorage.setItem('userLoginStatus', 'true');
+                localStorage.setItem('userName', data.name);
+                loginAlert.className = 'alert alert-success';
+                loginAlert.textContent = `登录成功！欢迎 ${data.name}，即将跳转到单招咨询页面...`;
+                loginAlert.style.display = 'block';
+
+                // 重置表单并跳转
+                loginForm.reset();
+                setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+
+            } catch (err) {
+                loginAlert.className = 'alert alert-danger';
+                loginAlert.textContent = `网络错误：${err.message}`;
+                loginAlert.style.display = 'block';
+            }
+        });
+
+        // 注册表单提交（重构为index的逻辑，保留原有前端验证）
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const registerAlert = document.getElementById('registerAlert');
+            let isValid = true;
+
+            // 原有前端验证逻辑保留
+            if (!name) {
+                document.getElementById('registerNameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('registerNameError').style.display = 'none';
+            }
+            if (!isValidPhone(phone)) {
+                document.getElementById('registerPhoneError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('registerPhoneError').style.display = 'none';
+            }
+
+            // 前端验证不通过则终止
+            if (!isValid) return;
+
+            try {
+                // 调用Supabase插入用户（复用index逻辑）
+                const { data, error } = await supabase.from('user_info')
+                    .insert([{ name, phone }])
+                    .select();
+
+                if (error) {
+                    registerAlert.className = 'alert alert-danger';
+                    registerAlert.textContent = error.message.includes('unique constraint') ? '该手机号已注册' : `注册失败：${error.message}`;
+                    registerAlert.style.display = 'block';
+                    return;
+                }
+
+                // 注册成功（复用index的状态存储和跳转逻辑）
+                localStorage.setItem('userLoginStatus', 'true');
+                localStorage.setItem('userName', name);
+                registerAlert.className = 'alert alert-success';
+                registerAlert.textContent = '注册成功！即将跳转到单招咨询页面...';
+                registerAlert.style.display = 'block';
+
+                // 重置表单并跳转
+                registerForm.reset();
+                setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+
+            } catch (err) {
+                registerAlert.className = 'alert alert-danger';
+                registerAlert.textContent = `网络错误：${err.message}`;
+                registerAlert.style.display = 'block';
+            }
+        });
+
+        // 输入框实时验证（失去焦点时，保留原有）
+        const phoneInputs = [document.getElementById('loginPhone'), document.getElementById('registerPhone')];
+        const nameInputs = [document.getElementById('loginName'), document.getElementById('registerName')];
+
+        nameInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                const errorEl = document.getElementById(`${input.id}Error`);
+                if (!input.value.trim()) {
+                    errorEl.style.display = 'block';
+                } else {
+                    errorEl.style.display = 'none';
+                }
+            });
+        });
+
+        phoneInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                const errorEl = document.getElementById(`${input.id}Error`);
+                if (!isValidPhone(input.value.trim())) {
+                    errorEl.style.display = 'block';
+                } else {
+                    errorEl.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
