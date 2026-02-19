@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>根据成绩选院校 - 河南书易教育单招咨询</title>
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" type="text/css" href="shuiyin.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>根据成绩选院校 - 河南书易教育单招咨询</title>
+<link href="common.css" rel="stylesheet"/>
+<link href="shuiyin.css" rel="stylesheet" type="text/css"/>
+<style>
         /* 全局基础样式 */
         * {
             margin: 0;
@@ -58,7 +59,7 @@
         }
 
         .nav-menu li a {
-            font-size: 16px;
+            font-size: 18px;
             padding: 5px 0;
             border-bottom: 2px solid transparent;
             transition: border-color 0.3s;
@@ -224,52 +225,48 @@
 <!-- 引入登录检查脚本 -->
 <script src="auth.js"></script>
 </head>
-
 <body>
 <div class="watermark"></div>
-    <!-- 导航栏 -->
+<!-- 导航栏 -->
 <header>
-    <div class="container nav">
-        <div class="logo">河南书易教育单招咨询</div>
-        <ul class="nav-menu">
-            <li><a href="shouye.html">首<br/>页</a></li>
-            <li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
-            <li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
-            <li><a href="chengji.html">根据成绩<br/>选院校</a></li>
-            <li><a href="us.html">关于<br/>我们</a></li>
-        </ul>
-        <!-- 用户信息区域（由auth.js动态填充） -->
-    </div>
+<div class="container nav">
+<div class="logo">河南书易教育单招咨询</div>
+<ul class="nav-menu">
+<li><a href="shouye.html">首<br/>页</a></li>
+<li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
+<li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
+<li><a href="chengji.html">根据成绩<br/>选院校</a></li>
+<li><a href="us.html">关于<br/>我们</a></li>
+</ul>
+<!-- 用户信息区域（由auth.js动态填充） -->
+</div>
 </header>
-
-    <!-- 本页面核心内容 -->
-    <main class="page-container">
-        <h1 class="page-title">根据成绩选院校</h1>
-
-        <!-- 搜索框区域 -->
-        <div class="search-container">
-            <div class="search-item">
-                <label class="search-label" for="schoolSearchInput">搜索院校名称</label>
-                <input type="text" id="schoolSearchInput" placeholder="请输入院校名称搜索...">
-            </div>
-            <div class="search-item">
-                <label class="search-label" for="scoreSearchInput">搜索会考参考成绩</label>
-                <input type="text" id="scoreSearchInput" placeholder="例如：AAA、BBC等">
-            </div>
-        </div>
-
-        <div class="table-box">
-            <table class="college-table">
-                <thead>
-                    <tr>
-                        <th>院校名称</th>
-                        <th>所在地</th>
-                        <th>类型</th>
-                        <th>会考参考</th>
-                        <th>录取规则参考</th>
-                        <th>中职/社会生参考</th>
-                    </tr>
-                </thead>
+<!-- 本页面核心内容 -->
+<main class="page-container">
+<h1 class="page-title">根据成绩选院校</h1>
+<!-- 搜索框区域 -->
+<div class="search-container">
+<div class="search-item">
+<label class="search-label" for="schoolSearchInput">搜索院校名称</label>
+<input id="schoolSearchInput" placeholder="请输入院校名称搜索..." type="text"/>
+</div>
+<div class="search-item">
+<label class="search-label" for="scoreSearchInput">搜索会考参考成绩</label>
+<input id="scoreSearchInput" placeholder="例如：AAA、BBC等" type="text"/>
+</div>
+</div>
+<div class="table-box">
+<table class="college-table">
+<thead>
+<tr>
+<th>院校名称</th>
+<th>所在地</th>
+<th>类型</th>
+<th>会考参考</th>
+<th>录取规则参考</th>
+<th>中职/社会生参考</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td><a href="html/1.html">河南地矿职业学院</a></td>
@@ -1380,23 +1377,19 @@ A100%B85%C75%D50%E30%
 <td>分数优先</td>
 </tr>
 </tbody>
-
-
-            </table>
-            <!-- 无结果提示 -->
-            <div class="no-result" id="noResult">暂无匹配的院校信息</div>
-        </div>
-    </main>
-
-    <!-- 公共页脚（直接复用） -->
-    <footer>
-        <div class="container footer-info">
-            <p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
-            <p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
-        </div>
-    </footer>
-
-    <script>
+</table>
+<!-- 无结果提示 -->
+<div class="no-result" id="noResult">暂无匹配的院校信息</div>
+</div>
+</main>
+<!-- 公共页脚（直接复用） -->
+<footer>
+<div class="container footer-info">
+<p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
+<p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
+</div>
+</footer>
+<script>
         // 获取元素
         const schoolSearchInput = document.getElementById('schoolSearchInput');
         const scoreSearchInput = document.getElementById('scoreSearchInput');

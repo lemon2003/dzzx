@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>单招咨询系统 - 登录注册</title>
-    <link rel="stylesheet" type="text/css" href="common.css">
-    <link rel="stylesheet" type="text/css" href="shuiyin.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>单招咨询系统 - 登录注册</title>
+<link href="common.css" rel="stylesheet" type="text/css"/>
+<link href="shuiyin.css" rel="stylesheet" type="text/css"/>
+<style>
         /* 登录注册区域样式 */
         .auth-container {
             max-width: 500px;
@@ -122,79 +123,74 @@
             }
         }
     </style>
-    <!-- 引入Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
-</head>
+<!-- 引入Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
+<style>.nav-menu li a { font-size: 18px; }</style></head>
 <body>
 <div class="watermark"></div>
-   <!-- 导航栏 -->
-    <header>
-        <div class="container nav">
-            <div class="logo">河南书易教育单招咨询</div>
-            <ul class="nav-menu">
-                <li><a href="shouye.html">首<br/>页</a></li>
-                <li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
-                <li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
-                <li><a href="chengji.html">根据成绩<br/>选院校</a></li>
-                <li><a href="us.html">关于<br/>我们</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <!-- 登录注册核心区域 -->
-    <section class="container">
-        <div class="auth-container">
-            <!-- 切换标签 -->
-            <div class="auth-tabs">
-                <div class="auth-tab active" data-tab="login">登录</div>
-                <div class="auth-tab" data-tab="register">注册</div>
-            </div>
-
-            <!-- 登录表单 -->
-            <form class="auth-form active" id="loginForm">
-                <div class="form-group">
-                    <label for="loginName">姓名</label>
-                    <input type="text" id="loginName" placeholder="请输入您的姓名" required>
-                    <div class="error-tip" id="loginNameError">姓名不能为空</div>
-                </div>
-                <div class="form-group">
-                    <label for="loginPhone">手机号码</label>
-                    <input type="tel" id="loginPhone" placeholder="请输入您的手机号码" required>
-                    <div class="error-tip" id="loginPhoneError">请输入正确的手机号码</div>
-                </div>
-                <button type="submit" class="submit-btn">登录</button>
-                <!-- 新增登录提示框 -->
-                <div id="loginAlert" class="alert"></div>
-            </form>
-
-            <!-- 注册表单 -->
-            <form class="auth-form" id="registerForm">
-                <div class="form-group">
-                    <label for="registerName">姓名</label>
-                    <input type="text" id="registerName" placeholder="请输入您的姓名" required>
-                    <div class="error-tip" id="registerNameError">姓名不能为空</div>
-                </div>
-                <div class="form-group">
-                    <label for="registerPhone">手机号码</label>
-                    <input type="tel" id="registerPhone" placeholder="请输入您的手机号码" required>
-                    <div class="error-tip" id="registerPhoneError">请输入正确的手机号码</div>
-                </div>
-                <button type="submit" class="submit-btn">注册</button>
-                <!-- 新增注册提示框 -->
-                <div id="registerAlert" class="alert"></div>
-            </form>
-        </div>
-    </section>
-
-    <!-- 页脚（复用原有样式） -->
-    <footer>
-        <div class="container footer-info">
-            <p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
-            <p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
-        </div>
-    </footer>
-
-    <script>
+<!-- 导航栏 -->
+<header>
+<div class="container nav">
+<div class="logo">河南书易教育单招咨询</div>
+<ul class="nav-menu">
+<li><a href="shouye.html">首<br/>页</a></li>
+<li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
+<li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
+<li><a href="chengji.html">根据成绩<br/>选院校</a></li>
+<li><a href="us.html">关于<br/>我们</a></li>
+</ul>
+</div>
+</header>
+<!-- 登录注册核心区域 -->
+<section class="container">
+<div class="auth-container">
+<!-- 切换标签 -->
+<div class="auth-tabs">
+<div class="auth-tab active" data-tab="login">登录</div>
+<div class="auth-tab" data-tab="register">注册</div>
+</div>
+<!-- 登录表单 -->
+<form class="auth-form active" id="loginForm">
+<div class="form-group">
+<label for="loginName">姓名</label>
+<input id="loginName" placeholder="请输入您的姓名" required="" type="text"/>
+<div class="error-tip" id="loginNameError">姓名不能为空</div>
+</div>
+<div class="form-group">
+<label for="loginPhone">手机号码</label>
+<input id="loginPhone" placeholder="请输入您的手机号码" required="" type="tel"/>
+<div class="error-tip" id="loginPhoneError">请输入正确的手机号码</div>
+</div>
+<button class="submit-btn" type="submit">登录</button>
+<!-- 新增登录提示框 -->
+<div class="alert" id="loginAlert"></div>
+</form>
+<!-- 注册表单 -->
+<form class="auth-form" id="registerForm">
+<div class="form-group">
+<label for="registerName">姓名</label>
+<input id="registerName" placeholder="请输入您的姓名" required="" type="text"/>
+<div class="error-tip" id="registerNameError">姓名不能为空</div>
+</div>
+<div class="form-group">
+<label for="registerPhone">手机号码</label>
+<input id="registerPhone" placeholder="请输入您的手机号码" required="" type="tel"/>
+<div class="error-tip" id="registerPhoneError">请输入正确的手机号码</div>
+</div>
+<button class="submit-btn" type="submit">注册</button>
+<!-- 新增注册提示框 -->
+<div class="alert" id="registerAlert"></div>
+</form>
+</div>
+</section>
+<!-- 页脚（复用原有样式） -->
+<footer>
+<div class="container footer-info">
+<p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
+<p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
+</div>
+</footer>
+<script>
         // 页面加载时检查登录状态
         document.addEventListener('DOMContentLoaded', function() {
             // 如果用户已登录，直接跳转到首页

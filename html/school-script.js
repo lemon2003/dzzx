@@ -1,12 +1,12 @@
 function checkLogin() {
     const isLoggedIn = localStorage.getItem('userLoginStatus') === 'true';
     const currentPage = window.location.pathname.split('/').pop();
-    if (!isLoggedIn && currentPage !== 'index.html') {
-        window.location.href = 'index.html';
+    if (!isLoggedIn && currentPage !== '../index.html') {
+        window.location.href = '../index.html';
         return false;
     }
-    if (isLoggedIn && currentPage === 'index.html') {
-        window.location.href = 'shouye.html';
+    if (isLoggedIn && currentPage === '../index.html') {
+        window.location.href = '../shouye.html';
         return false;
     }
     return true;
@@ -14,7 +14,7 @@ function checkLogin() {
 document.addEventListener('DOMContentLoaded', function() {
     if (!checkLogin()) return;
     const currentPage = window.location.pathname.split('/').pop();
-    if (currentPage !== 'index.html') {
+    if (currentPage !== '../index.html') {
         const userName = localStorage.getItem('userName');
         if (userName) {
             const nav = document.querySelector('.nav');
@@ -36,5 +36,5 @@ document.addEventListener('DOMContentLoaded', function() {
 function logout() {
     localStorage.removeItem('userLoginStatus');
     localStorage.removeItem('userName');
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 }

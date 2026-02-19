@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南职业院校信息查询 - 河南书易教育单招咨询</title>
-    <!-- 引入公共样式 -->
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" type="text/css" href="shuiyin.css">
-    <!-- 本页面专属样式 -->
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>河南职业院校信息查询 - 河南书易教育单招咨询</title>
+<!-- 引入公共样式 -->
+<link href="common.css" rel="stylesheet"/>
+<link href="shuiyin.css" rel="stylesheet" type="text/css"/>
+<!-- 本页面专属样式 -->
+<style>
         /* 页面主体样式 */
         body {
             background-color: #f8f9fa;
@@ -132,70 +133,64 @@
     </style>
 <!-- 引入登录检查脚本 -->
 <script src="auth.js"></script>
-</head>
+<style>.nav-menu li a { font-size: 18px; }</style></head>
 <body>
 <div class="watermark"></div>
-    <!-- 导航栏 -->
+<!-- 导航栏 -->
 <header>
-    <div class="container nav">
-        <div class="logo">河南书易教育单招咨询</div>
-        <ul class="nav-menu">
-            <li><a href="shouye.html">首<br/>页</a></li>
-            <li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
-            <li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
-            <li><a href="chengji.html">根据成绩<br/>选院校</a></li>
-            <li><a href="us.html">关于<br/>我们</a></li>
-        </ul>
-        <!-- 用户信息区域（由auth.js动态填充） -->
-    </div>
+<div class="container nav">
+<div class="logo">河南书易教育单招咨询</div>
+<ul class="nav-menu">
+<li><a href="shouye.html">首<br/>页</a></li>
+<li><a href="yuanxiao.html">河南单招<br/>院校大全</a></li>
+<li><a href="zhuanye.html">根据专业<br/>选院校</a></li>
+<li><a href="chengji.html">根据成绩<br/>选院校</a></li>
+<li><a href="us.html">关于<br/>我们</a></li>
+</ul>
+<!-- 用户信息区域（由auth.js动态填充） -->
+</div>
 </header>
-
-    <!-- 页面标题区域 -->
-    <div class="page-container">
-        <h1 class="page-title">河南职业院校信息与所在地</h1>
-        <p align="center"><strong style="font-size: 1.2em;">在搜索框中填入院校名称或所在地，即可搜索出符合条件的院校信息。</strong></p>
-        <p align="center">点击院校名称，可查看书易教育整理的院校信息</p>
-
-        <!-- 搜索框区域 -->
-        <div class="search-container">
-            <div class="search-item">
-                <label class="search-label" for="schoolSearchInput">搜索院校名称</label>
-                <input type="text" id="schoolSearchInput" placeholder="请输入院校名称搜索...">
-            </div>
-            <div class="search-item">
-                <label class="search-label" for="locationSearchInput">搜索所在地</label>
-                <input type="text" id="locationSearchInput" placeholder="请输入所在地搜索...">
-            </div>
-        </div>
-
-        <!-- 表格区域 -->
-        <div class="table-box">
-            <table class="college-table" id="schoolTable">
-                <thead>
-                    <tr>
-
-                        <th>所在地</th>
-                        <th>院校名称</th>
-                    </tr>
-                </thead>
-                <tbody id="schoolTableBody">
-                    <!-- 院校数据将通过JavaScript动态生成 -->
-                </tbody>
-            </table>
-            <!-- 无结果提示 -->
-            <div class="no-result" id="noResult">暂无匹配的院校信息</div>
-        </div>
-    </div>
-
-    <!-- 公共页脚 -->
-    <footer>
-        <div class="container footer-info">
-            <p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
-            <p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
-        </div>
-    </footer>
-
-    <script>
+<!-- 页面标题区域 -->
+<div class="page-container">
+<h1 class="page-title">河南职业院校信息与所在地</h1>
+<p align="center"><strong style="font-size: 1.2em;">在搜索框中填入院校名称或所在地，即可搜索出符合条件的院校信息。</strong></p>
+<p align="center">点击院校名称，可查看书易教育整理的院校信息</p>
+<!-- 搜索框区域 -->
+<div class="search-container">
+<div class="search-item">
+<label class="search-label" for="schoolSearchInput">搜索院校名称</label>
+<input id="schoolSearchInput" placeholder="请输入院校名称搜索..." type="text"/>
+</div>
+<div class="search-item">
+<label class="search-label" for="locationSearchInput">搜索所在地</label>
+<input id="locationSearchInput" placeholder="请输入所在地搜索..." type="text"/>
+</div>
+</div>
+<!-- 表格区域 -->
+<div class="table-box">
+<table class="college-table" id="schoolTable">
+<thead>
+<tr>
+<th>所在地</th>
+<th>院校名称</th>
+</tr>
+</thead>
+<tbody id="schoolTableBody">
+<!-- 院校数据将通过JavaScript动态生成 -->
+</tbody>
+</table>
+<!-- 无结果提示 -->
+<div class="no-result" id="noResult">暂无匹配的院校信息</div>
+</div>
+</div>
+<!-- 公共页脚 -->
+<footer>
+<div class="container footer-info">
+<p>单招咨询系统 河南书易教育专用网站 | 详细咨询：姜老师 17744639665 | 地址：河南省郑州市中牟县青年西路34号大学生众创中心（农校东侧）</p>
+<p style="margin-top: 10px; font-size: 12px;">本系统仅提供咨询服务，最终政策以教育考试院公布为准</p>
+</div>
+</footer>
+<script>
         // 院校数据（从yx.xlsx提取，并添加了示例所在地）
 const schools = [
             { id: 1, name: "河南地矿职业学院", location: "郑州" },
