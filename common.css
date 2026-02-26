@@ -74,6 +74,34 @@ footer {
     opacity: 0.9;
 }
 
+
+/* 重命名后的 mytb 表格样式 */
+.mytb {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.mytb th,
+.mytb td {
+    border: 1px solid #e5e7eb;
+    padding: 12px 15px;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.mytb th {
+    background-color: #f8fafc;
+    font-weight: 500;
+    width: 120px;
+    text-align: center;
+}
+
+.mytb td {
+    text-align: center;
+}
+
+
 /* 响应式适配（导航+页脚） */
 @media (max-width: 768px) {
     .nav {
